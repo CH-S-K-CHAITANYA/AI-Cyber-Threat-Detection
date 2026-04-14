@@ -72,14 +72,14 @@ AI-based anomaly detection solves this by **learning what "normal" looks like** 
 
 ## 🏭 Industry Relevance
 
-| Industry | Use Case | System Equivalent |
-|---|---|---|
-| **Banking & Finance** | Detect fraudulent transactions, brute-force login attempts on payment systems | Fraud detection engines (Visa, Mastercard) |
-| **IT Companies / SaaS** | Monitor internal network for data exfiltration, C2 communication | SIEM platforms (Splunk, IBM QRadar) |
-| **E-commerce** | Detect scraping bots, DDoS on checkout APIs, credential stuffing | Cloudflare Bot Management |
-| **Healthcare** | Protect patient data, detect ransomware lateral movement | CrowdStrike Falcon, Darktrace |
-| **Telecom / ISPs** | Classify traffic anomalies at scale, block botnets | Network-layer ML classifiers |
-| **Government / Defense** | Real-time intrusion detection on critical infrastructure | NSA XKEYSCORE-class systems |
+| Industry                 | Use Case                                                                      | System Equivalent                          |
+| ------------------------ | ----------------------------------------------------------------------------- | ------------------------------------------ |
+| **Banking & Finance**    | Detect fraudulent transactions, brute-force login attempts on payment systems | Fraud detection engines (Visa, Mastercard) |
+| **IT Companies / SaaS**  | Monitor internal network for data exfiltration, C2 communication              | SIEM platforms (Splunk, IBM QRadar)        |
+| **E-commerce**           | Detect scraping bots, DDoS on checkout APIs, credential stuffing              | Cloudflare Bot Management                  |
+| **Healthcare**           | Protect patient data, detect ransomware lateral movement                      | CrowdStrike Falcon, Darktrace              |
+| **Telecom / ISPs**       | Classify traffic anomalies at scale, block botnets                            | Network-layer ML classifiers               |
+| **Government / Defense** | Real-time intrusion detection on critical infrastructure                      | NSA XKEYSCORE-class systems                |
 
 This project directly mirrors **Tier-1 SOC Analyst workflows**:
 `Network tap → Flow extraction → Feature engineering → ML scoring → Alert triage → Dashboard`
@@ -137,14 +137,14 @@ This project directly mirrors **Tier-1 SOC Analyst workflows**:
 
 ## 🛠️ Tech Stack
 
-| Component | Technology | Purpose |
-|---|---|---|
-| Language | Python 3.10+ | Core implementation |
-| Data Handling | Pandas, NumPy | Dataset loading, cleaning, transformation |
-| ML Models | Scikit-learn | Isolation Forest, Random Forest, Logistic Regression |
-| Visualization | Matplotlib, Seaborn | SOC-style dark theme charts |
-| Serialization | Pickle | Save/load trained models |
-| Dataset | CICIDS-2017 (CIC) | Real-world labeled network traffic |
+| Component     | Technology          | Purpose                                              |
+| ------------- | ------------------- | ---------------------------------------------------- |
+| Language      | Python 3.10+        | Core implementation                                  |
+| Data Handling | Pandas, NumPy       | Dataset loading, cleaning, transformation            |
+| ML Models     | Scikit-learn        | Isolation Forest, Random Forest, Logistic Regression |
+| Visualization | Matplotlib, Seaborn | SOC-style dark theme charts                          |
+| Serialization | Pickle              | Save/load trained models                             |
+| Dataset       | CICIDS-2017 (CIC)   | Real-world labeled network traffic                   |
 
 **No GPU required.** Entire pipeline runs on any standard laptop in under 60 seconds.
 
@@ -154,16 +154,17 @@ This project directly mirrors **Tier-1 SOC Analyst workflows**:
 
 **CICIDS-2017** — Canadian Institute for Cybersecurity Intrusion Detection Dataset 2017
 
-| Property | Details |
-|---|---|
-| Source | [University of New Brunswick, Canada](https://www.unb.ca/cic/datasets/ids-2017.html) |
-| Size | ~2.8 million network flow records |
-| Features | 78 features extracted by CICFlowMeter |
-| Labels | BENIGN, DoS, DDoS, Port Scan, Brute Force, Web Attack, Bot, Infiltration |
-| Format | CSV files (one per day of the week) |
-| Collection | Network traffic captured Mon–Fri on a real enterprise network |
+| Property   | Details                                                                              |
+| ---------- | ------------------------------------------------------------------------------------ |
+| Source     | [University of New Brunswick, Canada](https://www.unb.ca/cic/datasets/ids-2017.html) |
+| Size       | ~2.8 million network flow records                                                    |
+| Features   | 78 features extracted by CICFlowMeter                                                |
+| Labels     | BENIGN, DoS, DDoS, Port Scan, Brute Force, Web Attack, Bot, Infiltration             |
+| Format     | CSV files (one per day of the week)                                                  |
+| Collection | Network traffic captured Mon–Fri on a real enterprise network                        |
 
 **Feature Categories:**
+
 - **Flow statistics** — duration, bytes, packets, bits per second
 - **Packet length stats** — mean, std, max, min, variance
 - **Inter-arrival times (IAT)** — mean/std for fwd and bwd directions
@@ -199,13 +200,13 @@ Random Forest trains an ensemble of 100 decision trees on **labeled** network fl
 
 Combines scores from both models using domain-driven thresholds:
 
-| Severity | Anomaly Score | RF Probability | Action |
-|---|---|---|---|
-| 🔴 CRITICAL | ≥ 0.90 | ≥ 0.95 | Immediate block + escalate |
-| 🟠 HIGH | ≥ 0.75 | ≥ 0.80 | Alert SOC Tier-1 analyst |
-| 🟡 MEDIUM | ≥ 0.55 | ≥ 0.60 | Log + monitor |
-| 🟢 LOW | ≥ 0.35 | ≥ 0.40 | Log only |
-| ⚪ INFO | Below all | Any | Audit trail |
+| Severity    | Anomaly Score | RF Probability | Action                     |
+| ----------- | ------------- | -------------- | -------------------------- |
+| 🔴 CRITICAL | ≥ 0.90        | ≥ 0.95         | Immediate block + escalate |
+| 🟠 HIGH     | ≥ 0.75        | ≥ 0.80         | Alert SOC Tier-1 analyst   |
+| 🟡 MEDIUM   | ≥ 0.55        | ≥ 0.60         | Log + monitor              |
+| 🟢 LOW      | ≥ 0.35        | ≥ 0.40         | Log only                   |
+| ⚪ INFO     | Below all     | Any            | Audit trail                |
 
 ### Baseline — Logistic Regression
 
@@ -217,23 +218,23 @@ A linear classifier used as a performance baseline. Demonstrates why more comple
 
 ### Model Performance Comparison
 
-| Model | Accuracy | Precision | Recall | F1-Score | AUC-ROC |
-|---|---|---|---|---|---|
-| **Random Forest** | **99.72%** | **99.73%** | **99.72%** | **99.72%** | **1.0000** |
-| Logistic Regression | 98.25% | 98.31% | 98.25% | 98.26% | 0.9978 |
-| Isolation Forest (unsupervised) | 86.55% | 87.83% | 86.55% | 84.34% | N/A |
+| Model                           | Accuracy   | Precision  | Recall     | F1-Score   | AUC-ROC    |
+| ------------------------------- | ---------- | ---------- | ---------- | ---------- | ---------- |
+| **Random Forest**               | **99.72%** | **99.73%** | **99.72%** | **99.72%** | **1.0000** |
+| Logistic Regression             | 98.25%     | 98.31%     | 98.25%     | 98.26%     | 0.9978     |
+| Isolation Forest (unsupervised) | 86.55%     | 87.83%     | 86.55%     | 84.34%     | N/A        |
 
 > Isolation Forest's lower accuracy is expected — it receives **no label information during training**. Its power lies in detecting threats that were never seen in training data.
 
 ### Detection Summary (20,000 sample run)
 
-| Metric | Value |
-|---|---|
+| Metric                | Value                  |
+| --------------------- | ---------------------- |
 | Total flows processed | 4,000 (20% test split) |
-| Threats detected | 1,720 |
-| CRITICAL alerts | 830 |
-| Average anomaly score | 0.6138 |
-| Pipeline runtime | ~13 seconds |
+| Threats detected      | 1,720                  |
+| CRITICAL alerts       | 830                    |
+| Average anomaly score | 0.6138                 |
+| Pipeline runtime      | ~13 seconds            |
 
 ### Top Predictive Features (Random Forest Importance)
 
@@ -293,6 +294,7 @@ AI-Cybersecurity-Threat-Detection/
 ## ⚙️ Installation
 
 ### Prerequisites
+
 - Python 3.10 or higher
 - pip
 
@@ -306,12 +308,14 @@ cd AI-Cybersecurity-Threat-Detection
 ### Step 2 — Create and activate a virtual environment
 
 **Windows:**
+
 ```bash
 python -m venv venv
 venv\Scripts\activate
 ```
 
 **Mac / Linux:**
+
 ```bash
 python -m venv venv
 source venv/bin/activate
@@ -405,34 +409,41 @@ outputs/
 ## 🖼️ Screenshots & Outputs
 
 ### Executive SOC Dashboard
+
 ![Executive Dashboard](images/10_executive_dashboard.png)
 
 ### Anomaly Score Distribution
+
 > Normal traffic (blue) clusters at low scores; attack traffic (red) spikes at high scores. Clear model separation visible.
 
 ![Anomaly Score Distribution](images/01_anomaly_score_distribution.png)
 
 ### ROC Curve — AUC 1.0000
+
 > Random Forest achieves near-perfect detection vs. false alarm trade-off.
 
 ![ROC Curve](images/02_roc_curve.png)
 
 ### Confusion Matrix
+
 > True positive (TP), True negative (TN), False positive (FP), False negative (FN) breakdown.
 
 ![Confusion Matrix](images/03_confusion_matrix.png)
 
 ### Feature Importance
+
 > Which network statistics are the most predictive indicators of an attack.
 
 ![Feature Importance](images/04_feature_importance.png)
 
 ### Network Anomaly Timeline
+
 > Anomaly score plotted over time — spikes show detected threat windows.
 
 ![Anomaly Timeline](images/06_anomaly_timeline.png)
 
 ### Model Comparison
+
 > Side-by-side accuracy, precision, recall, and F1-score for all three models.
 
 ![Model Comparison](images/08_model_comparison.png)
@@ -444,6 +455,7 @@ outputs/
 By building and running this project, you gain hands-on experience with:
 
 **Machine Learning & AI**
+
 - Supervised vs. unsupervised learning for security
 - Isolation Forest for anomaly detection
 - Random Forest for multi-class classification
@@ -452,18 +464,21 @@ By building and running this project, you gain hands-on experience with:
 - Handling class imbalance with `class_weight='balanced'`
 
 **Data Engineering**
+
 - Preprocessing real-world dirty network data
 - Handling infinite values, NaN, duplicates, negative values
 - Feature selection — variance filtering and correlation analysis
 - StandardScaler normalization and train/test split strategy
 
 **Cybersecurity**
+
 - Understanding network flow features (CICFlowMeter output)
 - DoS, Port Scan, Brute Force, Web Attack, Botnet detection logic
 - Severity classification and alert triage
 - SOC analyst workflow simulation
 
 **Software Engineering**
+
 - Modular Python project structure
 - CLI argument parsing with `argparse`
 - Model persistence with `pickle`
@@ -503,13 +518,10 @@ This project is licensed under the **MIT License** — see [LICENSE](LICENSE) fo
 
 <div align="center">
 
-**Built by [YOUR NAME]**
+**Built by [CH S K CHAITANYA]**
 
 If this project helped you, please ⭐ star the repository!
 
 [![GitHub stars](https://img.shields.io/github/stars/YOUR_USERNAME/AI-Cybersecurity-Threat-Detection?style=social)](https://github.com/YOUR_USERNAME/AI-Cybersecurity-Threat-Detection)
 
 </div>
-#   A I - C y b e r - T h r e a t - D e t e c t i o n  
- #   A I - C y b e r - T h r e a t - D e t e c t i o n  
- 
