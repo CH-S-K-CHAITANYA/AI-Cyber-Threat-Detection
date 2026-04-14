@@ -1,0 +1,27 @@
+# AI-Powered Cybersecurity Threat Detection System
+# requirements.txt
+#
+# Install all dependencies with:
+#   pip install -r requirements.txt
+#
+# Or create a virtual environment first (recommended):
+#   python -m venv venv
+#   source venv/bin/activate        (Mac/Linux)
+#   venv\Scripts\activate           (Windows)
+#   pip install -r requirements.txt
+
+# ── Core data science ─────────────────────────────────────────
+numpy==1.26.4
+pandas==2.2.1
+scipy==1.13.0
+
+# ── Machine learning ──────────────────────────────────────────
+scikit-learn==1.4.2
+
+# ── Visualization ─────────────────────────────────────────────
+matplotlib==3.8.4
+seaborn==0.13.2
+
+# ── Utilities ─────────────────────────────────────────────────
+tqdm==4.66.2              # progress bars during training
+joblib==1.4.0             # parallel processing (used by sklearn)

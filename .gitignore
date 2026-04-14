@@ -1,0 +1,39 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Raw data (too large for git — download via download_dataset.py)
+data/raw/*.csv
+
+# Trained models (large binary files — use Git LFS or exclude)
+models/*.pkl
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log

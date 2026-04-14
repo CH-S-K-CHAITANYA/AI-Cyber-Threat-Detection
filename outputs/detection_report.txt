@@ -1,0 +1,47 @@
+============================================================
+  AI CYBERSECURITY THREAT DETECTION — RUN REPORT
+============================================================
+
+  Total Flows Processed  : 10,000
+  Total Alerts Generated : 3,843
+  Detection Rate         : 38.43%
+  Average Anomaly Score  : 0.4936
+  Max Anomaly Score      : 1.0000
+
+  ALERTS BY SEVERITY:
+    CRITICAL  : 2,072
+    HIGH      : 77
+    MEDIUM    : 120
+    LOW       : 1,574
+
+  TOP ATTACK TYPES:
+    Suspicious Activity                : 1,792
+    Port Scan                          : 1,223
+    Benign                             : 777
+    Unknown / Novel Attack             : 51
+
+============================================================
+  MODEL PERFORMANCE:
+============================================================
+  Random Forest:
+    Accuracy  : 99.86%
+    Precision : 99.86%
+    Recall    : 99.86%
+    F1-Score  : 99.86%
+
+  Logistic Regression (Baseline):
+    Accuracy  : 98.23%
+    Precision : 98.29%
+    Recall    : 98.23%
+    F1-Score  : 98.24%
+
+  Isolation Forest (Unsupervised):
+    Accuracy  : 87.35%
+    Precision : 88.28%
+    Recall    : 87.35%
+    F1-Score  : 85.54%
+
+============================================================
+  All output files saved to: outputs/
+  All chart images saved to: images/
+============================================================
