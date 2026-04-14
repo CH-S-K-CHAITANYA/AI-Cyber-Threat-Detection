@@ -522,6 +522,6 @@ This project is licensed under the **MIT License** — see [LICENSE](LICENSE) fo
 
 If this project helped you, please ⭐ star the repository!
 
-[![GitHub stars](https://img.shields.io/github/stars/YOUR_USERNAME/AI-Cybersecurity-Threat-Detection?style=social)](https://github.com/CH-S-K-CHAITANYA/AI-Cybersecurity-Threat-Detection)
+[![GitHub stars](https://img.shields.io/github/stars/YOUR_USERNAME/AI-Cybersecurity-Threat-Detection?style=social)](https://github.com/CH-S-K-CHAITANYA/AI-Cyber-Threat-Detection)
 
 </div>
